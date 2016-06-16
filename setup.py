@@ -25,4 +25,22 @@ setup(
     description='Python Git Utility Library and Helper Scripts',
     setup_requires=['pytest-runner', 'fudge', 'gitpython'],
     tests_require=['pytest'],
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Environment :: Console',
+        'Environment :: MacOS X',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: MacOS',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX',
+        'Operating System :: POSIX :: BSD',
+        'Operating System :: POSIX :: Linux'
+        'Operating System :: Unix',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Version Control',
+        'Topic :: Utilities',
+    ]
 )
