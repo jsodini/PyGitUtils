@@ -16,6 +16,7 @@
 Helper utilities to parse 'git status' command response.
 """
 
+import os.path
 import re
 
 import git
@@ -29,7 +30,9 @@ class GitStatus(object):
     GIT_MODIFIED_REGEX = re.compile('modified:\s*(.*?)\\n')
     GIT_UNTRACKED_REGEX = re.compile('^Untracked files:$')
 
-    def __init__(self, path_to_git_repo=paths.path_to_git_repo()):
+    def __init__(self,
+                 path_to_git_repo=paths.path_to_git_repo(),
+                 show_full_path=False):
         """
         Git Status wrapper object constructor. If a path to git repo is not
         entered, it will search upwards from the current working directory.
@@ -37,6 +40,7 @@ class GitStatus(object):
         :param path_to_git_repo: Path to the project .git directory.
         """
         self._path_to_git_repo = path_to_git_repo
+        self._show_full_path = show_full_path
 
     @property
     def status(self):
@@ -55,7 +59,8 @@ class GitStatus(object):
 
         :return: List of files found (empty list when nothing found).
         """
-        return GitStatus.GIT_STATUS_NEW_REGEX.findall(self.status)
+        new_files = GitStatus.GIT_STATUS_NEW_REGEX.findall(self.status)
+        return self._format_paths(new_files)
 
     @property
     def modified_files(self):
@@ -64,7 +69,8 @@ class GitStatus(object):
 
         :return: List of files found (empty list when nothing found).
         """
-        return GitStatus.GIT_MODIFIED_REGEX.findall(self.status)
+        modified_files = GitStatus.GIT_MODIFIED_REGEX.findall(self.status)
+        return self._format_paths(modified_files)
 
     @property
     def untracked_files(self):
@@ -85,4 +91,12 @@ class GitStatus(object):
                 # Only search when we've entered the right context of output.
                 untracked_scope = GitStatus.GIT_UNTRACKED_REGEX.match(line)
 
-        return untracked_files
+        return self._format_paths(untracked_files)
+
+    def _format_paths(self, results):
+        if self._show_full_path:
+            return [os.path.join(self._path_to_git_repo, file_path)
+                    for file_path in results]
+
+        return results
+

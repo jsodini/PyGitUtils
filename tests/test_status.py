@@ -57,8 +57,8 @@ class PathsDataTest(gitutils.status.GitStatus):
     attributes.
     """
 
-    def __init__(self, git_status_data):
-        gitutils.status.GitStatus.__init__(self, '/wat')
+    def __init__(self, git_status_data, full_path=False):
+        gitutils.status.GitStatus.__init__(self, '/wat', full_path)
         self._git_status_data = git_status_data
 
     @property
@@ -73,6 +73,11 @@ class PathsTest(unittest.TestCase):
         self.assertEqual(["new_file_one", "new_file_two"],
                          git_status.new_files)
 
+    def test_new_files_found_when_full_path(self):
+        git_status = PathsDataTest(TEST_POSITIVE_STATUS, True)
+        self.assertEqual(["/wat/new_file_one", "/wat/new_file_two"],
+                         git_status.new_files)
+
     def test_new_files_empty_when_not_present(self):
         git_status = PathsDataTest(TEST_NEGATIVE_STATUS)
         self.assertFalse(git_status.new_files)
@@ -82,6 +87,11 @@ class PathsTest(unittest.TestCase):
         self.assertEqual(["modified_file_one", "modified_file_two"],
                          git_status.modified_files)
 
+    def test_modified_files_found_when_full_path(self):
+        git_status = PathsDataTest(TEST_POSITIVE_STATUS, True)
+        self.assertEqual(["/wat/modified_file_one", "/wat/modified_file_two"],
+                         git_status.modified_files)
+
     def test_modified_files_empty_when_not_present(self):
         git_status = PathsDataTest(TEST_NEGATIVE_STATUS)
         self.assertFalse(git_status.modified_files)
@@ -89,6 +99,12 @@ class PathsTest(unittest.TestCase):
     def test_untracked_files_found_when_present(self):
         git_status = PathsDataTest(TEST_POSITIVE_STATUS)
         self.assertEqual(["untracked_file_one", "untracked_file_two"],
+                         git_status.untracked_files)
+
+    def test_untracked_files_found_when_full_path(self):
+        git_status = PathsDataTest(TEST_POSITIVE_STATUS, True)
+        self.assertEqual(["/wat/untracked_file_one",
+                          "/wat/untracked_file_two"],
                          git_status.untracked_files)
 
     def test_untracked_files_empty_when_not_present(self):
