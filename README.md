@@ -1,2 +1,2 @@
 # PyGitUtils
-Python Git Utility Library and helper Scripts
+Python Git Utility Library and Helper Scripts
