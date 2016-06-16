@@ -25,6 +25,13 @@ setup(
     description='Python Git Utility Library and Helper Scripts',
     setup_requires=['pytest-runner', 'fudge', 'gitpython'],
     tests_require=['pytest'],
+    scripts=[
+        'bin/git-add-all-files',
+        'bin/git-add-all-tracked-files',
+        'bin/git-add-modified-files',
+        'bin/git-add-new-files',
+        'bin/git-add-untracked-files',
+    ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Console',
@@ -42,5 +49,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Version Control',
         'Topic :: Utilities',
-    ]
+    ],
 )
