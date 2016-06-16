@@ -40,6 +40,7 @@ class GitStatus(object):
         :param path_to_git_repo: Path to the project .git directory.
         """
         self._path_to_git_repo = path_to_git_repo
+        self._path_to_git_root = paths.path_to_git_root(path_to_git_repo)
         self._show_full_path = show_full_path
 
     @property
@@ -95,7 +96,7 @@ class GitStatus(object):
 
     def _format_paths(self, results):
         if self._show_full_path:
-            return [os.path.join(self._path_to_git_repo, file_path)
+            return [os.path.join(self._path_to_git_root, file_path)
                     for file_path in results]
 
         return results

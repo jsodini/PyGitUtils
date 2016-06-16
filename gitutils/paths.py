@@ -38,3 +38,16 @@ def path_to_git_repo(start_path=os.path.abspath('.')):
     parent_path = os.path.normpath(os.path.join(start_path, '..'))
 
     return path_to_git_repo(parent_path)
+
+
+def path_to_git_root(full_path_to_git_repo):
+    """
+    Strips the path of '.git' at the end.
+
+    :param full_path_to_git_repo: Full path to git repo.
+    :return: Full path to git root.
+    """
+    if not full_path_to_git_repo.endswith('.git'):
+        raise EnvironmentError('No git repo found')
+
+    return os.path.normpath(os.path.join(full_path_to_git_repo, '..'))

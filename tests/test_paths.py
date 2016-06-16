@@ -36,3 +36,8 @@ class PathsTest(unittest.TestCase):
         git_path = paths.path_to_git_repo('/wat/foo')
         self.assertEqual('/wat/.git', git_path)
 
+    def test_path_to_git_root_throws_when_no_git_found(self):
+        self.assertRaises(EnvironmentError, paths.path_to_git_root, '/wat')
+
+    def test_path_to_git_root_strips_git_when_found(self):
+        self.assertEqual('/wat', paths.path_to_git_root('/wat/.git'))
