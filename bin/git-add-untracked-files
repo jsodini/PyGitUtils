@@ -12,3 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+import git
+
+import gitutils.paths
+import gitutils.status
+
+
+if __name__ == '__main__':
+    git_repo = git.Repo(gitutils.paths.path_to_git_repo())
+    git_status = gitutils.status.GitStatus(show_full_path=True)
+
+    [git_repo.git.add(file_path) for file_path in git_status.untracked_files]
