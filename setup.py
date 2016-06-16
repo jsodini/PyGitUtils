@@ -27,9 +27,7 @@ setup(
     tests_require=['pytest'],
     scripts=[
         'bin/git-add-all-files',
-        'bin/git-add-all-tracked-files',
         'bin/git-add-modified-files',
-        'bin/git-add-new-files',
         'bin/git-add-untracked-files',
     ],
     classifiers=[
